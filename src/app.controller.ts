@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Param, Body, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, ParseIntPipe, Delete } from '@nestjs/common';
 // import { EADDRNOTAVAIL } from 'constants';
 import { AppService } from './app.service';
 import { TodoInterface } from './dto/app.dto'
@@ -7,16 +7,32 @@ import { TodoInterface } from './dto/app.dto'
 export class AppController {
   constructor(private readonly appService: AppService) { }
 
-  @Post()
+  @Get()
+  async sayHello() {
+    return "welcome to simple todo backend server!"
+  }
+
+  @Post('add')
   async insertNum(@Body() todo: TodoInterface,) {
-    console.log(todo)
     return this.appService.insertNum(todo.todo)
   }
 
-  @Get()
+  @Get('all')
   async getArray(
   ) {
-    return this.appService.showAll(true)
+    return this.appService.showAll()
+  }
+
+  @Get(':id')
+  async getaDocument(
+    @Param('id') id
+  ) {
+    return this.appService.getDoc(id)
+  }
+
+  @Delete('delete')
+  async deleteTodo(@Body('id') id) {
+    return this.appService.deleteTodo(id)
   }
 
 }

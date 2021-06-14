@@ -1,58 +1,32 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
 import { TodoInterface } from './dto/app.dto';
+import { Model } from 'mongoose';
+import { Todo, TodoDocument } from './schema/app.schema';
 
 @Injectable()
 export class AppService {
-  private readonly todos: TodoInterface[] = []
+  // private readonly todos: TodoInterface[] = []
 
-  insertNum(todo: string): string {
-    this.todos.push({ id: this.todos.length, todo: todo, date: new Date() })
-    return 'the id were corectly added.';
+  @InjectModel('todoModel') private readonly todoModel: Model<TodoDocument>
+
+  async insertNum(todo: string): Promise<string> {
+    // this.todos.push({ id: this.todos.length, todo: todo, date: new Date() })
+    const createdCat = new this.todoModel({ todo: todo, date: new Date() })
+    await createdCat.save()
+    return 'added'
   }
 
-  showAll(sort: boolean): TodoInterface[] {
+  async getDoc(id: string): Promise<TodoInterface> {
+    return await this.todoModel.findOne({"_id": id}).exec();
+  }
 
-    const _numbers: TodoInterface[] = this.todos
-    if (sort) {
-      _numbers.sort(function (a, b) {
-        return a.id - b.id;
-      });
-    }
+  async showAll(): Promise<TodoInterface[]> {
+    return await this.todoModel.find().exec();
+  }
 
-    return _numbers;
+  async deleteTodo(id: string) {
+    await this.todoModel.findByIdAndDelete({"_id": id})
+    return 'deleted'
   }
 }
-
-
-// import { Injectable } from '@nestjs/common';
-// import { InjectModel } from '@nestjs/mongoose';
-// import { TodoInterface } from './dto/app.dto';
-// import { Model } from 'mongoose';
-// import { Todo, TodoDocument } from './schema/app.schema';
-
-// @Injectable()
-// export class AppService {
-//   // private readonly todos: TodoInterface[] = []
-
-//   @InjectModel('todoModel') private readonly todoModel: Model<TodoDocument>
-
-//   insertNum(todo: string): Promise<Todo> {
-//     // this.todos.push({ id: this.todos.length, todo: todo, date: new Date() })
-//     const createdCat = new this.todoModel(null);  
-//     return createdCat.save();;
-//   }
-
-//   showAll(_: boolean): Promise<TodoInterface[]> {
-
-//     return this.todoModel.find().exec();
-
-//     // const _numbers: TodoInterface[] = this.todos
-//     // if (sort) {
-//     //   _numbers.sort(function (a, b) {
-//     //     return a.id - b.id;
-//     //   });
-//     // }
-
-//     // return _numbers;
-//   }
-// }
