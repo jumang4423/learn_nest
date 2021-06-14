@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  todo_nestjs:
+    build: .
+    tty: true
+    command: npm run start:debug
+    env_file:
+        - .env
+    volumes:
+      - .:/todo_nestjs
+    ports:
+      - "3000:3000"
