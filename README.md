@@ -18,19 +18,20 @@
 
 # about the docker environment
 
-- to build & run this:
+- to build & run server:
   ```bash
   docker compose up # this will automatically build & run a container called 'todo_nestjs'
   ```
+  this also runs ***yarn run start:dev*** exposed at localhost:3000/
 
-  this als runs ***npm run start:dev*** exposed at localhost:3000/
+- run command via:
+    ```bash
+    docker compose up -d
+    docker compose exec todo_nestjs bash
+    ...(then enter some fucking bashy commands right here)
+    ```
 
 - to stop the container
     ```bash
   docker compose down
-  ```
-
-- run command via:
-    ```bash
-  docker compose exec todo_nestjs nest new service <some fucking commands right here>
   ```

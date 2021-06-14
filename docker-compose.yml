@@ -4,7 +4,7 @@ services:
   todo_nestjs:
     build: .
     tty: true
-    command: npm run start:debug
+    command: yarn run start:debug
     env_file:
         - .env
     volumes:
