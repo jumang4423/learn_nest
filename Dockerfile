@@ -6,7 +6,6 @@ COPY . .
 RUN apk update
 RUN apk add git
 RUN yarn global add @nestjs/cli
-RUN yarn install
 
 ENV HOST 0.0.0.0
 EXPOSE 3000
