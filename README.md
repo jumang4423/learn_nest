@@ -13,12 +13,12 @@
 - ✅GET::/:id -> get one document
 - POST::/login(SOME PARAMS) -> get a token for that
 - ✅POST::/add(SOME PARAMS) -> add todo and return id
-- PUT ::/update(SOME PARAMS) -> upadate todos and return bool successful or not
-- DELETE ::/delete(SOME PARAMS) -> delete todos by id
+- ✅PATCH ::/:id(SOME PARAMS) -> upadate todos and return bool successful or not
+- ✅DELETE ::/:id -> delete todos by id
 
 # about the docker environment
 
-- to build & run server:
+- to run server:
   ```bash
   docker compose up # this will automatically build & run a container called 'todo_nestjs'
   ```

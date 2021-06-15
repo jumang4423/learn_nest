@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Param, Body, ParseIntPipe, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, ParseIntPipe, Delete, Patch } from '@nestjs/common';
 // import { EADDRNOTAVAIL } from 'constants';
 import { AppService } from './app.service';
 import { TodoInterface } from './dto/app.dto'
+import { TodoDto } from './dto/todoDto.dto'
 
 @Controller()
 export class AppController {
@@ -30,8 +31,18 @@ export class AppController {
     return this.appService.getDoc(id)
   }
 
-  @Delete('delete')
-  async deleteTodo(@Body('id') id) {
+  @Patch(':id')
+  async updateTodo(
+    @Param('id') id: string,
+    @Body() todo: TodoDto,
+  ) {
+    console.log(todo);
+
+    return this.appService.updateTodo(id, todo)
+  }
+
+  @Delete(':id')
+  async deleteTodo(@Param('id') id) {
     return this.appService.deleteTodo(id)
   }
 

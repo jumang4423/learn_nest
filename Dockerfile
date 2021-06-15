@@ -2,11 +2,11 @@ FROM node:12.13.1-alpine
 
 WORKDIR /todo_nestjs
 
-RUN apk update && \
-    apk add git && \
-    npm install -g npm && \
-    npm install -g @nestjs/cli && \
-    npm install -g yarn
+COPY . .
+RUN apk update
+RUN apk add git
+RUN yarn global add @nestjs/cli
+RUN yarn install
 
 ENV HOST 0.0.0.0
 EXPOSE 3000
